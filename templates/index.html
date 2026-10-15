@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f6f2">
+  <title>San Jose Weather</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+      color: #182c27;
+      background: #f3f6f2;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(ellipse at 15% 10%, #dcebe1 0, transparent 38%),
+        radial-gradient(ellipse at 92% 90%, #f6e7d2 0, transparent 34%),
+        #f3f6f2;
+    }
+
+    main {
+      width: min(100%, 520px);
+      padding: clamp(28px, 7vw, 56px);
+      border: 1px solid #dce5dd;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 24px 70px rgba(30, 58, 47, 0.08);
+      animation: arrive 500ms ease-out both;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: #527566;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 3.25rem;
+      font-weight: 500;
+    }
+
+    .region {
+      margin: 8px 0 34px;
+      color: #66766e;
+      font-size: 1rem;
+    }
+
+    .weather {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding-top: 26px;
+      border-top: 1px solid #e1e8e2;
+    }
+
+    .temperature {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 7rem;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .unit {
+      color: #527566;
+      font-size: 1.25rem;
+    }
+
+    .description {
+      margin: 16px 0 0;
+      color: #40594d;
+      font-size: 1.2rem;
+    }
+
+    .error {
+      margin: 28px 0 0;
+      padding: 14px 16px;
+      border-left: 3px solid #ba694c;
+      background: #fbf1eb;
+      color: #713d2e;
+      line-height: 1.5;
+    }
+
+    @keyframes arrive {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; }
+    }
+
+    @media (max-width: 420px) {
+      h1 { font-size: 2.5rem; }
+      .temperature { font-size: 5.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Current weather</p>
+    <h1>San Jose</h1>
+    <p class="region">California</p>
+
+    {% if error %}
+      <p class="error" role="alert">{{ error }}</p>
+    {% else %}
+      <section aria-label="Current conditions">
+        <div class="weather">
+          <span class="temperature">{{ temperature|round|int }}</span>
+          <span class="unit">°F</span>
+        </div>
+        <p class="description">{{ description }}</p>
+      </section>
+    {% endif %}
+  </main>
+</body>
+</html>
